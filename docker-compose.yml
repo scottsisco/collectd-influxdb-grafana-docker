@@ -1,5 +1,10 @@
 version: '2'
 
+networks:
+  default:
+    external:
+      name: nginx-proxy
+
 services:
   collectd:
     image: fr3nd/collectd
@@ -9,18 +14,25 @@ services:
       - /proc:/mnt/proc:ro
       - ./collectd.conf:/etc/collectd/collectd.conf
   influxdb:
-    image: influxdb:1.0
+    image: influxdb
+    environment:
+      - INFLUXDB_HTTP_AUTH_ENABLED=true
+      - INFLUXDB_ADMIN_ENABLED=true
+      - INFLUXDB_ADMIN_USER=admin
+      - INFLUXDB_ADMIN_PASSWORD=yourpasswordhere
+      - VIRTUAL_PORT=8086
     ports:
-      - "8083:8083"
-      - "8086:8086"
       - "25826:25826/udp"
     volumes:
       - /var/lib/influxdb
       - ./influxdb.conf:/etc/influxdb/influxdb.conf
       - ./types.db:/usr/share/collectd/types.db:ro
   grafana:
-    image: grafana/grafana:3.1.1
-    ports:
-      - "3000:3000"
+    image: grafana/grafana
+    environment:
+      - VIRTUAL_HOST=yourhostnamehere.com
+      - VIRTUAL_PORT=3000
+      - LETSENCRYPT_HOST=yourhostnamehere.como
+      - LETSENCRYPT_EMAIL=youremailhere@gmail.com
     volumes:
       - /var/lib/grafana
