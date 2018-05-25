@@ -1,6 +1,5 @@
 # About
 
-Test 1-2-3
 
 This repository shows how to use a docker compose file to setup a local collectd, influxdb, grafana stack,
 
