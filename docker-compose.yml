@@ -51,10 +51,10 @@ services:
   grafana:
     image: grafana/grafana
     environment:
-      - VIRTUAL_HOST=grafana2.sisco.io
+      - VIRTUAL_HOST=yourhostname.com
       - VIRTUAL_PORT=3000
-      - LETSENCRYPT_HOST=grafana2.sisco.io
-      - LETSENCRYPT_EMAIL=scottsisco@gmail.com
+      - LETSENCRYPT_HOST=yourhostname.com
+      - LETSENCRYPT_EMAIL=youremail
     volumes:
       - /var/lib/grafana
     networks:
